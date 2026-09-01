@@ -595,6 +595,20 @@ def execute_command(command, *, confirm_destructive: bool = False, attached_file
     if learn_reply:
         return learn_reply
 
+    # ---------------- DOCTOR (self-diagnostic) -----------------------------
+    # "doctor", "nova doctor", "health check" - Nova inspects its own
+    # health (API keys, packages, OCR, internet, data files, git) and
+    # returns a report. Lazy import: PyInstaller needs
+    # --hidden-import nova_doctor (wired in build.py).
+    if command in ("doctor", "nova doctor", "health check", "health",
+                   "run diagnostics", "diagnostics", "doctor report"):
+        try:
+            from nova_doctor import handle_doctor_command
+            return handle_doctor_command(command)
+        except Exception as exc:
+            log.exception("doctor command failed")
+            return f"Doctor is unavailable right now: {type(exc).__name__}: {exc}"
+
     # ---------------- COMPUTER USE (semantic screen control) --------------
     # "screen dekho", "click on search bar", "search bar me hello likho",
     # "come back on home screen" - naam/jagah se PC control, no coordinates.

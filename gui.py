@@ -54,6 +54,7 @@ from nova_vision import (
     ask_gemini_vision, check_gemini_status, get_last_gemini_error,
     check_ocr_status, extract_text_from_image, capture_screen_image,
 )
+from nova_gui_helpers import completion_text, is_supported_image, read_file_preview
 from nova_routine import sync_routine_for_today
 from nova_daily import run_daily
 import nova_study
@@ -644,12 +645,6 @@ def make_tool_card(parent, title, subtitle, command, row, column):
     return card
 
 
-def completion_text(items):
-    total = len(items)
-    done = sum(1 for item in items if item.get("done"))
-    return f"{done}/{total}" if total else "0/0"
-
-
 def current_streak_count():
     count = 0
     d = date.today()
@@ -731,35 +726,6 @@ def rebuild_home_chat():
         else:
             add_nova_bubble(entry.get("text", ""), time_str=entry.get("time"), save=False)
 
-
-def read_file_preview(path, max_chars=4500):
-    ext = os.path.splitext(path)[1].lower()
-    try:
-        if ext == ".pdf":
-            try:
-                from pypdf import PdfReader  # type: ignore
-            except ImportError:
-                try:
-                    from PyPDF2 import PdfReader  # type: ignore  # legacy fallback
-                except ImportError:
-                    return None, "PDF support needs 'pypdf'. Install it: pip install pypdf"
-            try:
-                reader = PdfReader(path)
-                text = "\n".join((page.extract_text() or "") for page in reader.pages[:5])
-            except Exception as exc:
-                return None, f"PDF read failed: {type(exc).__name__}: {exc}"
-        else:
-            with open(path, "r", encoding="utf-8", errors="ignore") as file:
-                text = file.read(max_chars)
-    except Exception as exc:
-        return None, str(exc)
-    return text[:max_chars], None
-
-
-def is_supported_image(path):
-    return os.path.splitext(path)[1].lower() in {
-        ".png", ".jpg", ".jpeg", ".webp", ".bmp", ".gif", ".tiff"
-    }
 
 # ==========================================
 # SETTINGS HELPERS (theme / language / voice) - unchanged logic

@@ -45,6 +45,8 @@ Nova ke code bahut saare Python files mein bata hain. Har file ek alag kaam kart
 | gui_integration.py | GUI ke liye patches (privacy mode) |
 | photo_detector.py | AI-generated image check |
 | emoji_render.py | Chat mein colour emoji dikhana |
+| nova_doctor.py | Doctor - self health check ("doctor" / "health check" command) |
+| nova_gui_helpers.py | GUI ke pure helpers (file preview, image check) - unit-tested |
 | nova_features/ | 18 extra features - alarms, quizzes, focus timer, etc. |
 
 ---
@@ -186,7 +188,7 @@ Yeh Nova ka sabse bada file hai (~4400 lines, 60+ functions). Yeh puri window ba
 25. **add_message()** - Chat box mein message bubble add karti hai (with typing animation).
 26. **toggle_voice()** / **set_voice_enabled()** - Voice on/off.
 27. **make_metric_card()**, **make_tool_card()**, **make_section_title()** - UI building helpers.
-28. **completion_text()**, **current_streak_count()**, **log_activity()** - Dashboard helpers.
+28. **completion_text()**, **read_file_preview()**, **is_supported_image()** - ab **nova_gui_helpers.py** mein hain (pure logic, unit-tested). **current_streak_count()**, **log_activity()** - Dashboard helpers (gui.py).
 29. **run_gui()** - Poori app launch karta hai (entry point).
 
 ---
@@ -523,6 +525,8 @@ Nova mein kaafi security patches lagaye gaye hain:
 ---
 
 ## 7. Quick Reference - Commands
+
+- **doctor** (ya "health check" / "diagnostics") - Nova apni health check karta hai: API keys, packages, OCR, internet, data files, write access, git. Report chat mein dikhta hai.
 
 ### Direct Commands (commands.py):
 - **Open Apps:** open youtube / open google / open chrome / open whatsapp

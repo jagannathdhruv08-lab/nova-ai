@@ -175,9 +175,13 @@ def build():
     # and the built exe silently reports "Gemini not configured". Force it in:
     cmd += ["--collect-all", "google"]
     cmd += ["--hidden-import", "google.genai"]
-    # pypdf is imported lazily inside nova_knowledge.py / gui.read_file_preview
-    # so PyInstaller can miss it - force it into the bundle.
+    # pypdf is imported lazily inside nova_knowledge.py /
+    # nova_gui_helpers.read_file_preview, so PyInstaller can miss it -
+    # force it into the bundle.
     cmd += ["--hidden-import", "pypdf"]
+    # nova_doctor is imported lazily inside commands.py (the "doctor"
+    # command), so PyInstaller can miss it too - force it in as well.
+    cmd += ["--hidden-import", "nova_doctor"]
     # google-genai pulls these heavy runtime deps that the graph can miss:
     for mod in ("grpcio", "grpcio._cython", "protobuf",
                 "google.auth", "google.auth.transport", "google.auth.compute_engine"):
