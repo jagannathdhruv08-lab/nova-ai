@@ -4996,6 +4996,50 @@ else:
     app.after(600, open_onboarding)
 
 # ==========================================
+# STARTUP SELF-CHECK (silent when healthy)
+# ~6s after boot, run the nova_doctor health check in a background
+# thread (never blocks the UI). A healthy Nova says NOTHING; only
+# FAIL results surface as a notification + chat bubble, with a hint
+# that "doctor" shows the full report. UI updates are marshalled back
+# through app.after(0, ...) - the same safe pattern used elsewhere.
+# ==========================================
+
+def _run_startup_doctor():
+    def _worker():
+        try:
+            from nova_doctor import run_doctor
+            results = run_doctor(include_mic=False)
+        except Exception:
+            log.exception("startup doctor failed")
+            return
+        failures = [r for r in results if r.get("status") == "fail"]
+        if not failures:
+            return  # healthy - stay quiet
+        detail = "\n".join(
+            f"\u2022 {r['name']}: {r['detail']}" for r in failures
+        )
+
+        def _report():
+            try:
+                short = detail[:180]
+                add_notification_item("Nova self-check found problems", short)
+                send_notification("Nova self-check", short)
+                add_nova_bubble(
+                    "\u26a0 Self-check found problems:\n" + detail +
+                    "\nType 'doctor' for the full report.",
+                    save=False,
+                )
+            except Exception:
+                log.exception("startup doctor UI report failed")
+
+        app.after(0, _report)
+
+    threading.Thread(target=_worker, daemon=True, name="startup-doctor").start()
+
+
+app.after(6000, _run_startup_doctor)
+
+# ==========================================
 # RUN APP
 # ==========================================
 
