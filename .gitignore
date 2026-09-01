@@ -1,0 +1,50 @@
+# --- Python / build artefacts -----------------------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+build/
+dist/
+.eggs/
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+backups/
+
+# NOTE: *.spec is deliberately NOT ignored - Nova.spec / main.spec are
+# project source files (PyInstaller build recipes), not artefacts.
+
+# --- Secrets & env -----------------------------------------------------
+.env
+.env.*
+*.pem
+*.key
+
+# --- Local user data (never commit chat logs / personal data) ----------
+history.json
+memory.json
+license.json
+settings.json
+nova_dashboard_data.json
+nova_coach_data.json
+nova_nutrition_data.json
+nova_srs_cards.json
+nova_exams.json
+nova_knowledge.json
+nova_study_log.json
+nova_calendar.ics
+nova_debug.log
+agent_audit.log
+*.log
+
+# --- OS junk -----------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- IDE / editor ------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo

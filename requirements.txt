@@ -1,0 +1,44 @@
+# ==========================================
+# Nova AI - Python dependencies
+# ==========================================
+# Voice listening stack (the packages that make `from voice import listen` work)
+SpeechRecognition==3.17.0
+PyAudio==0.2.14
+sounddevice==0.5.5
+numpy==1.26.4
+edge-tts==7.2.8
+pygame==2.6.1
+
+# GUI + system
+pillow==12.3.0
+customtkinter==6.0.0
+
+# Networking / API clients
+openai==2.51.0
+httpx==0.28.1
+requests==2.34.2
+python-dotenv==1.2.2
+
+# Background launcher (launcher.py)
+keyboard==0.13.5
+psutil==7.2.2
+pystray==1.2.52
+
+# Vision / extras
+opencv-python==4.10.0.84
+pytesseract==0.3.13
+# Gemini vision (meal/photo/screen analysis). Also must be bundled by build.py
+# (it is imported lazily, so PyInstaller needs --collect-all google).
+google-genai==2.16.0
+
+# Knowledge / "Train Nova" - PDF text extraction for the personal knowledge base
+pypdf==6.16.2
+
+# Security - encrypted storage for memory.json (secure_store.py)
+cryptography==45.0.7
+
+# Build / packaging
+pyinstaller==6.21.0
+
+# Dev
+pytest==9.1.1
