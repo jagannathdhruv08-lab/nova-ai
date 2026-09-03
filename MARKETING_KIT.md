@@ -77,7 +77,7 @@ aapke PC par rehti hai aur aapki files ko **safe, audited** tarike se chhooti ha
 > **Tech:** Python, CustomTkinter, Groq (chat), Gemini (vision), 190 unit tests, PyInstaller se single .exe.
 > **Cost:** ₹0 — sab free-tier API keys.
 >
-> Repo: <link> · Demo video: <link>
+> Repo: https://github.com/jagannathdhruv08-lab/nova-ai · Demo video: <YouTube-link-baad-me-add-hoga>
 > Feedback chahiye — especially security review (file agent par) 🙏
 
 ### B) X/Twitter thread (5 tweets)
@@ -91,7 +91,7 @@ aapke PC par rehti hai aur aapki files ko **safe, audited** tarike se chhooti ha
 >
 > **4/** AI se files delete karwana scary lagta hai? Nova me: allow-listed folders, confirmation dialog, rate limits, audit log. 🔒
 >
-> **5/** Voice + memory + news + study coach + Telegram bridge. 200+ features. ₹0/month. Repo: <link> ⭐
+> **5/** Voice + memory + news + study coach + Telegram bridge. 200+ features. ₹0/month. Repo: https://github.com/jagannathdhruv08-lab/nova-ai ⭐
 
 ### C) LinkedIn post
 
@@ -101,7 +101,7 @@ aapke PC par rehti hai aur aapki files ko **safe, audited** tarike se chhooti ha
 >
 > Sabse badi seekh: real engineering AI features se zyada safety me hai — path allow-lists, symlink protection, audit trails, rate limiting. AI ko "haan" bolna nahi, "rukho, pehle confirm karo" bolna sikhana hi asli kaam hai.
 >
-> Demo: <link> · Code: <link>
+> Demo: https://github.com/jagannathdhruv08-lab/nova-ai · Code: https://github.com/jagannathdhruv08-lab/nova-ai
 > #AI #Python #OpenSource #BuildInPublic
 
 ### D) Instagram/YT Shorts reel script (30 sec)
@@ -117,7 +117,7 @@ aapke PC par rehti hai aur aapki files ko **safe, audited** tarike se chhooti ha
 
 ### E) WhatsApp status / Telegram channel (short)
 
-> 🤖 Nova AI — meri apni assistant jo Hinglish me baat karti hai. Voice, screen-vision, memory, study coach — sab free. Demo: <link>
+> 🤖 Nova AI — meri apni assistant jo Hinglish me baat karti hai. Voice, screen-vision, memory, study coach — sab free. Demo: https://github.com/jagannathdhruv08-lab/nova-ai
 
 ---
 
