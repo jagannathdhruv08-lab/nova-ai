@@ -1,8 +1,8 @@
 <div align="center">
 
-# 🤖 Nova AI
+<img src="assets/banner.png" alt="Nova AI — Dimaag bhi, awaaz bhi, aankhein bhi." width="100%">
 
-### Your personal JARVIS for Windows — speaks Hinglish, runs on FREE API keys
+**Your personal JARVIS for Windows — speaks Hinglish, runs on FREE API keys**
 
 *"Nova, aaj ki news sunao" · "Is thali ki photo se calories batao" · "meri files saaf karo"*
 
@@ -11,6 +11,12 @@
 </div>
 
 ---
+
+<!-- TODO: real app screenshot yahan daalo (jab Nova kholi ho):
+<img src="assets/screenshot_home.png" alt="Nova AI main window" width="90%">
+Banao: Nova kholo -> .venv\Scripts\python.exe capture_nova.py  (assets/ me save hota hai)
+-->
+
 
 Nova AI ek desktop AI assistant hai jo aapke Windows PC par **local Python app** ki tarah chalti hai. Chat karti hai, **bolti aur sunnti** hai, aapki **screen aur camera dekh sakti** hai, khane ki photo se **calories nikalti** hai, aapki baatein **yaad rakhti** hai, aur files ko **safely manage** karti hai — sab kuch aapki shakal ke saamne, audit log ke saath.
 
