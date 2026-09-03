@@ -267,8 +267,13 @@ import time
 from datetime import date, timedelta, datetime
 
 try:
-    import importlib
-    plyer_notification = importlib.import_module("plyer.notification")
+    import plyer
+    # plyer 2.x exposes facades as Proxy ATTRIBUTES on the plyer package
+    # (plyer.notification), NOT as real submodules. The old
+    # importlib.import_module("plyer.notification") raised
+    # ModuleNotFoundError even with plyer installed, so reminders always
+    # fell back to the in-app popup and never showed native toasts.
+    plyer_notification = getattr(plyer, "notification", None)
 except Exception:
     plyer_notification = None
 

@@ -357,8 +357,21 @@ def handle(action_json: dict, confirm_callback=None) -> str:
             )
 
         if action == "empty_recycle_bin":
-            # platform-specific; not implemented here for brevity
-            return "Empty recycle bin: not yet implemented on this OS."
+            if os.name != "nt":
+                return "Empty recycle bin: only supported on Windows."
+            import ctypes
+            # Flags: SHERB_NOCONFIRMATION(0x1) | SHERB_NOPROGRESSUI(0x2) |
+            # SHERB_NOSOUND(0x4). The confirm dialog already ran above
+            # (empty_recycle_bin is in DESTRUCTIVE, so the GUI asked first).
+            res = ctypes.windll.shell32.SHEmptyRecycleBinW(None, None, 0x0007)
+            if res == 0:
+                audit(action, "<recycle_bin>", "ok", True)
+                return "Recycle bin emptied."
+            if res == -2147418113:  # 0x8000FFFF E_UNEXPECTED = already empty
+                audit(action, "<recycle_bin>", "ok", True)
+                return "Recycle bin is already empty."
+            audit(action, "<recycle_bin>", f"error:hresult:{res}", True)
+            return f"Empty recycle bin failed (system code {res})."
 
     except FileNotFoundError as e:
         audit(action, str(target), f"error:not_found", is_destructive, {"err": type(e).__name__})

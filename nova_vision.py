@@ -106,14 +106,16 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY", "")  # <-- paste your free key
 # number that Google later retires (as happened with gemini-2.5-flash, which
 # now 404s for new keys).
 GEMINI_MODEL = "gemini-flash-latest"
-# If the primary model is unavailable for any reason (deprecated/permission),
-# try these fallbacks in order. Verified live that gemini-flash-latest works;
-# these are safety nets.
+# If the primary model is unavailable for any reason (overloaded/deprecated/
+# permission), try these fallbacks in order. Live-verified on a free key
+# (Sep 2026): gemini-flash-latest intermittently returns 503 "high demand",
+# and the old fallbacks (gemini-2.5-flash-lite, gemini-2.0-flash,
+# gemini-1.5-flash) now 404 for new keys. gemini-flash-lite-latest and
+# gemini-3-flash-preview both answered 200 with this key.
 _GEMINI_MODEL_FALLBACKS = [
     "gemini-flash-latest",
-    "gemini-2.5-flash-lite",
-    "gemini-2.0-flash",
-    "gemini-1.5-flash",
+    "gemini-flash-lite-latest",
+    "gemini-3-flash-preview",
 ]
 
 _gemini_client = None
@@ -181,10 +183,12 @@ def ask_gemini_vision(pil_image, prompt_text):
             return text
         except Exception as exc:
             last_err = exc
-            # A model-not-found / no-longer-available error? Try the next one.
-            err_l = str(exc).lower()
-            if "not_found" not in err_l and "no longer available" not in err_l:
-                break  # real failure (auth/quota/network) - don't try other models
+            # ANY failure moves on to the next model: 404 = the model was
+            # retired for this key, 503 = "high demand" overload, 429 = that
+            # model's quota ran out. Each model has its own quota, so trying
+            # the next candidate is always the right recovery. (The old code
+            # broke out on non-404 errors, which meant a single 503 on the
+            # primary silently killed the whole chain.)
             print(f"Gemini model {model} unavailable, trying next:", exc)
 
     if last_err is not None:

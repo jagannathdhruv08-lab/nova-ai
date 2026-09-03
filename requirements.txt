@@ -12,6 +12,9 @@ pygame==2.6.1
 # GUI + system
 pillow==12.3.0
 customtkinter==6.0.0
+# Native desktop notifications (goal/task reminders). Missing install made
+# every reminder fall back to the in-app popup only.
+plyer==2.1.0
 
 # Networking / API clients
 openai==2.51.0

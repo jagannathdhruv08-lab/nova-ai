@@ -55,15 +55,18 @@ load_dotenv(dotenv_path=_ENV_PATH)
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "")
 OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY", "")
 
-# Groq model — fast, free tier.  Change this to any model listed at
-# https://console.groq.com/docs/models if you want to switch.
+# Groq model — fast, free tier. Change this to any model listed at
+# https://console.groq.com/docs/models if you want to switch, or set
+# NOVA_MODEL=<model id> in .env (that override was documented in
+# env.example for ages but was never actually read — fixed now).
 #
-# NOTE: the old default "llama-3.3-70b-versatile" was retired by Groq, so
-# every call returned HTTP 404 ("model_not_found") and the app showed
-# "Sorry, I couldn't process that right now. (NotFoundError)" for every
-# message. "openai/gpt-oss-20b" is a current production model and works for
-# both chat (ask_nova) and forced-JSON routing (route_to_agent).
-MODEL = "openai/gpt-oss-20b"
+# NOTE: the old defaults "llama-3.3-70b-versatile" and
+# "llama-3.1-8b-instant" were retired by Groq, so every call returned
+# HTTP 404 ("model_not_found") and the app showed "Sorry, I couldn't
+# process that right now. (NotFoundError)" for every message.
+# "openai/gpt-oss-20b" is a current production model and works for both
+# chat (ask_nova) and forced-JSON routing (route_to_agent).
+MODEL = os.getenv("NOVA_MODEL", "openai/gpt-oss-20b").strip() or "openai/gpt-oss-20b"
 
 # Backup provider — used AUTOMATICALLY whenever Groq fails (rate limit,
 # network error, retired model, auth problem) so Nova never stops replying.
